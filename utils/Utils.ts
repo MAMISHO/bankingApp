@@ -32,22 +32,7 @@ export const Utils = {
       console.log(err);
       return undefined;
     }
-    /*const decodedUser = decoded.data;
-    if (!decodedUser) {
-      // return res.json(401, { err: 'Invalid user' });
-      return exits.invalidUser();
-    }
-    if (!req.session.user || req.session.user.uuid !== decodedUser.uuid) {
-      // const user = await User.findOne({ uuid: decodedUser.uuid });
-      const user = await UserRepository.getByUUID(decodedUser.uuid);
-      if (user && user.status) {
-        req.session.user = user;
-      } else {
-        req.session.destroy();
-        // return res.json(401, { err: 'Invalid user' });
-        return exits.invalidUser();
-      }
-    }*/
+
     return decoded.data;
   },
 };

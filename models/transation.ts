@@ -18,7 +18,7 @@ interface transacctionModelInterface extends mongoose.Model<TransactionDoc> {
   build(attr: ITransaction): TransactionDoc;
 }
 
-interface TransactionDoc extends mongoose.Document {
+export interface TransactionDoc extends mongoose.Document {
   accountSender: string;
   accountReceiver: string;
   mount: number;

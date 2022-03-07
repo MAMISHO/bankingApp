@@ -20,11 +20,17 @@ export interface IUser {
   transacctions?: ITransaction[];
 }
 
+export interface IBasicUser {
+  name: string;
+  age: number;
+  accountNumber: string;
+}
+
 interface userModelInterface extends mongoose.Model<UserDoc> {
   build(attr: IUser): UserDoc;
 }
 
-interface UserDoc extends mongoose.Document {
+export interface UserDoc extends mongoose.Document {
   name: string;
   lastName: string;
   age: number;

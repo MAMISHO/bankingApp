@@ -5,12 +5,6 @@ import { Utils } from '../../utils/Utils';
 
 const router = express.Router();
 
-// Rutas de Usuarios
-/*router.get('/api/users', async (req: Request, res: Response) => {
-  const todo = await User.find({});
-  return res.status(200).send(todo);
-});*/
-
 router.post('/api/login', async (req: Request, res: Response) => {
   const { accountNumber, password } = req.body;
   const user = await User.findOne({ accountNumber, password });
