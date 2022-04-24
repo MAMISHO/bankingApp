@@ -1,21 +1,21 @@
-// var jwt = require('jsonwebtoken');
-import { sign, verify } from 'jsonwebtoken';
-const SECRET: string = process.env.JWT_SECRET_KEY
-  ? process.env.JWT_SECRET_KEY
-  : 'mysecret';
+import * as Bcrypt from 'bcryptjs';
+import { Request } from 'express';
+import * as Jwt from 'jsonwebtoken';
+const SECRET: string = process.env.JWT_SECRET_KEY ? process.env.JWT_SECRET_KEY : 'mysecret';
 
 export const Utils = {
-  generateCustomPassword: () => {
-    const s = '<>_!"$%&/()=?\u{20ac}';
-    const special = s.substr(Math.floor(s.length * Math.random()), 2);
-
-    // generating a random index into the string and extracting the character at that position
-    const passd1: any = Math.random().toString(36).slice(-6);
-    const passd2: any = Math.random().toString(36).slice(-6);
-    return passd1.concat(special.concat(passd2));
+  verifyPassword: function (password: string, passwordHash: string): boolean {
+    return Bcrypt.compareSync(password, passwordHash);
+  },
+  hashPassword: function (password: string): string {
+    const encryptedPassword = Bcrypt.hashSync(password);
+    if (!encryptedPassword) {
+      throw new Error('Errow meanwhile hashing password');
+    }
+    return encryptedPassword;
   },
   generateToken: (payload: any) => {
-    return sign(
+    return Jwt.sign(
       {
         data: payload,
       },
@@ -27,12 +27,27 @@ export const Utils = {
     // let user = User.build({});
     let decoded: any = undefined;
     try {
-      decoded = await verify(token, SECRET);
+      decoded = await Jwt.verify(token, SECRET);
     } catch (err) {
       console.log(err);
       return undefined;
     }
 
     return decoded.data;
+  },
+  recoverToken: (req: Request): string | undefined => {
+    if (req.headers && req.headers.authorization) {
+      //authorization header is present
+      const parts = req.headers.authorization.split(' ');
+      if (parts.length == 2) {
+        const scheme = parts[0];
+        const credentials = parts[1];
+
+        if (/^Bearer$/i.test(scheme)) {
+          return credentials;
+        }
+      }
+    }
+    return undefined;
   },
 };
