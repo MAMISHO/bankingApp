@@ -1,10 +1,9 @@
 import express from 'express';
 import { CustomAuth } from '../../policies/auth';
-import { UserRepository } from '../../repository/user/user.repository';
 import { UserController } from '../controllers/userController';
 
 const router = express.Router();
-const userRepository = new UserRepository();
+// const userRepository = new UserRepository();
 
 // Rutas de Usuarios
 router.get('/api/users', CustomAuth, UserController.getUsers);

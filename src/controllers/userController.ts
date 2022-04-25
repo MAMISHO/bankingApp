@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { UserDTO, UserRequestDTO, UserRoleType } from '../../models/user/user.model';
-import { UserServiceRepository } from '../../repository/user/user.service-repository';
+import { UserServiceRepository } from '../../repository/user/_user.service-repository';
 
 const Controller = {
   getUsers: async (req: Request, res: Response) => {
@@ -15,18 +15,18 @@ const Controller = {
   },
 
   createUser: async (req: Request, res: Response) => {
-    const { name, lastName, age, bankBalance, roleUser, email, password, passwordConfirm } = req.body;
+    const { name, lastname, username, roleUser, email, password, passwordConfirm } = req.body;
 
     const userDTO: UserDTO = new UserDTO({
-      name: name,
-      surname: lastName,
+      username,
+      name,
+      lastname,
       email,
       password,
       passwordConfirm,
       resetPasswordToken: 'HolaMundo1',
       role: UserRoleType.USER,
       status: true,
-      uuid: 'cc5bab9b-5685-4795-8721-e2cd7dabe2bd',
     });
     try {
       const user = await UserServiceRepository.add(userDTO);

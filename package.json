@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node-dev src/index.ts"
+    "build": "babel src -d lib",
+    "runDev": "ts-node-dev src/index.ts",
+    "start": "npm run build && npm run runDev"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +16,8 @@
     "@types/express-session": "^1.17.4",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/mongoose": "^5.7.36",
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-typescript-metadata": "^0.3.2",
     "ts-node-dev": "^1.0.0-pre.57",
     "typescript": "^4.2.4"
   },
@@ -35,6 +39,9 @@
     "json2csv": "^5.0.7",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.0",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.5.5",
+    "tsyringe": "^4.6.0",
     "uuid": "^8.3.2"
   }
 }

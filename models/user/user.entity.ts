@@ -1,11 +1,12 @@
 import mongoose from 'mongoose';
+import { IUser, UserRoleType } from './user.model';
 
-export enum UserRoleType {
+/*export enum UserRoleType {
   ADMIN = 'ADMIN',
   USER = 'USER',
-}
+}*/
 
-export interface IUser {
+/*export interface IUser {
   name: string;
   surname: string;
   email: string;
@@ -15,7 +16,7 @@ export interface IUser {
   role: UserRoleType;
   status: boolean;
   uuid: string;
-}
+}*/
 
 interface userModelInterface extends mongoose.Model<UserDoc> {
   build(attr: IUser): UserDoc;
@@ -23,7 +24,7 @@ interface userModelInterface extends mongoose.Model<UserDoc> {
 
 export interface UserDoc extends mongoose.Document {
   name: string;
-  surname: string;
+  lastName: string;
   email: string;
   password: string;
   resetPasswordToken: string;
@@ -33,17 +34,31 @@ export interface UserDoc extends mongoose.Document {
 }
 
 const userSchema = new mongoose.Schema({
+  uuid: {
+    type: String,
+    required: true,
+    index: true,
+    unique: true,
+  },
+  username: {
+    type: String,
+    required: true,
+    index: true,
+    unique: true,
+  },
   name: {
     type: String,
     required: true,
   },
-  surname: {
+  lastname: {
     type: String,
     required: true,
   },
   email: {
     type: String,
     required: true,
+    index: true,
+    unique: true,
   },
   password: {
     type: String,
@@ -51,7 +66,7 @@ const userSchema = new mongoose.Schema({
   },
   resetPasswordToken: {
     type: String,
-    required: true,
+    required: false,
   },
   role: {
     type: UserRoleType,
@@ -60,11 +75,6 @@ const userSchema = new mongoose.Schema({
   status: {
     type: Boolean,
     required: true,
-  },
-  uuid: {
-    type: String,
-    required: true,
-    index: true,
   },
   /*
   connections: {

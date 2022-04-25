@@ -1,6 +1,5 @@
 // declare const sails: any;
-import { IUser } from '../../models/user/user.entity';
-import { UserDTO, UserRequestDTO } from '../../models/user/user.model';
+import { IUser, UserDTO, UserRequestDTO } from '../../models/user/user.model';
 import { UserRepository } from './user.repository';
 
 export class UserServiceRepositoryImpl {

@@ -1,5 +1,6 @@
 import { v4 as uuid } from 'uuid';
-import { IUser, User } from '../../models/user/user.entity';
+import { User } from '../../models/user/user.entity';
+import { IUser } from '../../models/user/user.model';
 import { Utils } from '../../utils/Utils';
 
 export class UserRepository {

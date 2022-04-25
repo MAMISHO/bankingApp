@@ -2,6 +2,7 @@ import { json } from 'body-parser';
 import express from 'express';
 import session from 'express-session';
 import mongoose from 'mongoose';
+import 'reflect-metadata';
 import { IUser } from '../models/user/user.model';
 import { authRouter } from './routes/auth';
 import { graphqlRouter } from './routes/graphql';
@@ -12,6 +13,13 @@ declare module 'express-session' {
     user: IUser;
   }
 }
+
+// Configuramos el contenedor de servicios para
+/*container.register('IUserDAO', {
+  useClass: UserMongoDAO,
+});
+const userMongoDAO = container.resolve(UserMongoDAO);*/
+
 const app = express();
 app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 } }));
 app.use(json());

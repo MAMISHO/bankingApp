@@ -10,20 +10,23 @@ export enum UserRoleType {
 }
 
 export interface IUser {
+  uuid?: string;
+  username: string;
   name: string;
-  surname: string;
+  lastname: string;
   email: string;
   password: string;
   passwordConfirm: string;
   resetPasswordToken: string;
   role: UserRoleType;
   status: boolean;
-  uuid: string;
 }
 
 export class UserDTO {
+  public uuid: string;
+  public username: string;
   public name: string;
-  public surname: string;
+  public lastname: string;
   public email: string;
   public password: string;
   public passwordConfirm: string;
@@ -31,7 +34,6 @@ export class UserDTO {
   public role: UserRoleType;
   public status: boolean;
   // public devices: Device[];
-  public uuid: string;
 
   constructor(props?: IUser) {
     Object.assign(this, props);
@@ -42,14 +44,18 @@ export class UserDTO {
   }
 
   public fullName(): string {
-    return `${this.name} ${this.surname}`;
+    return `${this.name} ${this.lastname}`;
+  }
+
+  public toJSON(): Object {
+    return { ...this };
   }
 }
 
 export interface UserRequestDTO {
   id?: number;
   uuid?: string;
-  name?: string;
+  username?: string;
   email?: string;
   status?: boolean;
 }
