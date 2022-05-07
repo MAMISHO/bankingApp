@@ -6,6 +6,7 @@ import 'reflect-metadata';
 import { IUser } from '../models/user/user.model';
 import { authRouter } from './routes/auth';
 import { graphqlRouter } from './routes/graphql';
+import { importRouter } from './routes/import';
 import { userRouter } from './routes/user';
 
 declare module 'express-session' {
@@ -26,6 +27,7 @@ app.use(json());
 // app.use(todoRouter);
 app.use(userRouter);
 app.use(authRouter);
+app.use(importRouter);
 app.use(graphqlRouter);
 // app.use(connRouter);
 // app.use(TransactionRouter);

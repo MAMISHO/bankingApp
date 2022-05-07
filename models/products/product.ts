@@ -11,7 +11,7 @@ export enum Class {
 
 export interface IProduct {
   code?: String;
-  nationalcode?: String;
+  nationalCode?: String;
   specialties?: [];
   category?: ICategory;
   denomination?: String;
@@ -32,12 +32,12 @@ export interface IProduct {
 }
 
 interface productModelInterface extends mongoose.Model<ProductDoc> {
-  build(attr: IProduct): IProduct;
+  build(attr: IProduct): ProductDoc;
 }
 
 export interface ProductDoc extends mongoose.Document {
-  code?: String;
-  nationalcode?: String;
+  code?: String; // código de la industria
+  nationalCode?: String;
   specialties?: [];
   category?: ICategory;
   denomination?: String;
@@ -59,16 +59,69 @@ export interface ProductDoc extends mongoose.Document {
 
 const productSchema = new mongoose.Schema({
   code: {
-    type: Number,
-    required: true,
+    type: String,
   },
-  name: {
+  nationalCode: {
+    type: String,
+  },
+  specialties: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Specialty',
+    },
+  ],
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category',
+  },
+  denomination: {
     type: String,
     required: true,
   },
-  description: {
+  presentation: {
     type: String,
     required: true,
+  },
+  laboratory: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Laboratory',
+    required: true,
+  },
+  ingredients: {
+    type: String,
+  },
+  class: {
+    type: Class,
+  },
+  steril: {
+    type: Boolean,
+  },
+  healthIndications: {
+    type: String,
+  },
+  indications: {
+    type: String,
+  },
+  function: {
+    type: String,
+  },
+  howToUse: {
+    type: String,
+  },
+  specialConditions: {
+    type: String,
+  },
+  cautionsWarnings: {
+    type: String,
+  },
+  pao: {
+    type: String,
+  },
+  foodIntolerance: {
+    type: String,
+  },
+  tags: {
+    type: String,
   },
 });
 
@@ -77,8 +130,8 @@ productSchema.statics.build = (attr: IProduct) => {
 };
 
 const Product = mongoose.model<ProductDoc, productModelInterface>('Product', productSchema);
-Product.build({
+/*Product.build({
   code: '0',
-});
+});*/
 
 export { Product };
