@@ -40,6 +40,7 @@ app.use(graphqlRouter);
 // 'mongodb://localhost:27017/products',
 mongoose.connect(
   'mongodb://localhost:27017/products',
+  // 'mongodb://db-mongo-cosmos:n0WSrQ9OKRUvcGMmnhFK8j2DT7rBKzqKKCGFVtBZTTMLLNJugnqXHTMwWdxXDkBp8q7Xz7XenNZFyJZkor3hMw==@db-mongo-cosmos.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@db-mongo-cosmos@',
   {
     useNewUrlParser: true,
     useCreateIndex: true,

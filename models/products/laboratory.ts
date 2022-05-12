@@ -36,10 +36,10 @@ laboratorySchema.statics.build = (attr: ILaboratory) => {
 };
 
 const Laboratory = mongoose.model<LaboratoryDoc, laboratoryModelInterface>('Laboratory', laboratorySchema);
-Laboratory.build({
+/*Laboratory.build({
   code: 0,
   name: 'Fabricante',
   license: '0000000',
-});
+});*/
 
 export { Laboratory };

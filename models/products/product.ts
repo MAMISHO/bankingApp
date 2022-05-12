@@ -9,6 +9,27 @@ export enum Class {
   CLASE_III = 'CLASE_III',
 }
 
+export interface IProductFile {
+  code?: String;
+  nationalCode?: String;
+  specialties?: [];
+  category?: number;
+  denomination?: String;
+  presentation?: String;
+  laboratory?: number;
+  ingredients?: String;
+  class?: Class;
+  steril?: Boolean;
+  healthIndications?: String;
+  indications?: String;
+  function?: String;
+  howToUse?: String;
+  specialConditions?: String;
+  cautionsWarnings?: String;
+  pao?: String;
+  foodIntolerance?: String;
+  tags?: string;
+}
 export interface IProduct {
   code?: String;
   nationalCode?: String;
