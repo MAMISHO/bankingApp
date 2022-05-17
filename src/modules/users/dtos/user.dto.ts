@@ -1,26 +1,5 @@
-/**
- * User.ts
- *
- * @description :: Modelo que representa un Usuario
- */
-
-export enum UserRoleType {
-  ADMIN = 'ADMIN',
-  USER = 'USER',
-}
-
-export interface IUser {
-  uuid?: string;
-  username: string;
-  name: string;
-  lastname: string;
-  email: string;
-  password: string;
-  passwordConfirm: string;
-  resetPasswordToken: string;
-  role: UserRoleType;
-  status: boolean;
-}
+import { UserRoleType } from '../entities/user.enum';
+import { IUser } from '../entities/user.interface';
 
 export class UserDTO {
   public uuid: string;
@@ -53,6 +32,17 @@ export class UserDTO {
 }
 
 export interface UserRequestDTO {
+  id?: number;
+  uuid?: string;
+  username?: string;
+  email?: string;
+  status?: boolean;
+}
+
+/**
+ * Interfaz para los filtros de búsqueda en persitencia
+ */
+export interface UserCriteriaDTO {
   id?: number;
   uuid?: string;
   username?: string;

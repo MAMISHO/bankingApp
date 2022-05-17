@@ -1,5 +1,5 @@
 import { GraphQLInt, GraphQLObjectType, GraphQLSchema, GraphQLString } from 'graphql';
-import { UserDTO } from '../../../../models/user/user.model';
+import { UserDTO } from '../../../../src/modules/users/dtos/user.dto';
 import { UserHelper } from '../../helpers/user.helper';
 // import { DeviceInputType } from '../device/device.types';
 import { UserType } from './user.types';
@@ -15,7 +15,7 @@ export const UserQueries = {
     resolve: (root: any, params: any, options: any, info: any) => {
       // A este punto llega solo si se ha autenticado
       const user: UserDTO = new UserDTO({ ...options.user });
-      const isAdmin = user.isAdmin();
+      const isAdmin = !user.isAdmin();
 
       if (!params || Object.keys(params).length === 0) {
         // Devolvemos los datos sel usuario de la sesión

@@ -50,4 +50,24 @@ export const Utils = {
     }
     return undefined;
   },
+
+  checkValidValue: (obj: Object): boolean => {
+    return Object.values(obj).every((value) => {
+      if (value === null || value === undefined || value === '') {
+        return false;
+      }
+      return true;
+    });
+  },
+
+  hasValidValue: (obj: any): boolean => {
+    let valid = true;
+    if (obj === null || obj === undefined) {
+      valid = false;
+    }
+    if (valid && typeof obj === 'string' && obj === '') {
+      valid = false;
+    }
+    return valid;
+  },
 };

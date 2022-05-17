@@ -1,9 +1,9 @@
-import { v4 as uuid } from 'uuid';
-import { User } from '../../models/user/user.entity';
-import { IUser } from '../../models/user/user.model';
+/*import { v4 as uuid } from 'uuid';
+import { IUser } from '../../src/modules/users/entities/user.interface';
+import { User } from '../../src/modules/users/entities/_user.entity';
 import { Utils } from '../../utils/Utils';
 
-export class UserRepository {
+export class _UserRepository {
   public async findAllUsers(): Promise<IUser[]> {
     const users: IUser[] = await User.find({}).lean();
     return users;
@@ -26,4 +26,4 @@ export class UserRepository {
     const iuser: IUser = user.toJSON();
     return iuser;
   }
-}
+}*/

@@ -19,7 +19,7 @@ const Controller = {
     const { uuid, password } = req.body;
     // const user = await User.findOne({ uuid, password });
     // const user = await userRepositoryService.getByUUID(uuid);
-    const user = await UserRepositoryService.getByUUID(uuid);
+    const user = await UserRepositoryService.findOneByUUID(uuid);
     if (!user) {
       return res.status(400).send({ error: true, message: 'Bad credentials' });
     }

@@ -1,9 +1,11 @@
-import { IUser } from '../../models/user/user.model';
+import { UserCriteriaDTO } from '../dtos/user.dto';
+import { IUser } from '../entities/user.interface';
 
 export interface IUserRepository {
   get(id: number): Promise<IUser>;
+  findAll(filter: UserCriteriaDTO): Promise<IUser[]>;
   getByUUID(uuid: string): Promise<IUser>;
-  add(user: IUser): Promise<void>;
+  add(user: IUser): Promise<IUser>;
   update(User: IUser): Promise<void>;
   remove(user: IUser): Promise<void>;
 }

@@ -1,6 +1,3 @@
-import mongoose from 'mongoose';
-import { IUser, UserRoleType } from './user.model';
-
 /*export enum UserRoleType {
   ADMIN = 'ADMIN',
   USER = 'USER',
@@ -17,12 +14,12 @@ import { IUser, UserRoleType } from './user.model';
   status: boolean;
   uuid: string;
 }*/
-
+/*
 interface userModelInterface extends mongoose.Model<UserDoc> {
   build(attr: IUser): UserDoc;
 }
-
-export interface UserDoc extends mongoose.Document {
+*/
+/*export interface UserDoc extends mongoose.Document {
   name: string;
   lastName: string;
   email: string;
@@ -31,8 +28,8 @@ export interface UserDoc extends mongoose.Document {
   role: UserRoleType;
   status: boolean;
   uuid: string;
-}
-
+}*/
+/*
 const userSchema = new mongoose.Schema({
   uuid: {
     type: String,
@@ -76,23 +73,25 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
   },
-  /*
-  connections: {
-    type: [connSchema],
-    required: false,
-  },
-  transacctions: {
-    type: [transactionSchema],
-    required: false,
-  },*/
+  
+  // connections: {
+  //   type: [connSchema],
+  //   required: false,
+  // },
+  // transacctions: {
+  //   type: [transactionSchema],
+  //   required: false,
+  // },
 });
-
+*/
+/*
 userSchema.statics.build = (attr: IUser) => {
   // attr.password = Utils.generateCustomPassword();
   return new User(attr);
 };
+*/
 
-const User = mongoose.model<UserDoc, userModelInterface>('User', userSchema);
+// const User = mongoose.model<UserDoc, userModelInterface>('User', userSchema);
 // const role = UserRoleType.CLIENT;
 // const connections = new Array<IConn>();
 /*User.build({
@@ -104,4 +103,4 @@ const User = mongoose.model<UserDoc, userModelInterface>('User', userSchema);
   // connections,
 });*/
 
-export { User };
+// export { User };

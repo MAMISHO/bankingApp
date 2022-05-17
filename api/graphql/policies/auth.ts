@@ -6,7 +6,7 @@
  *  b) allow access to resources based on role-based ACL
  */
 declare const sails: any;
-import { UserDTO } from '../../../models/user/user.model';
+import { UserDTO } from '../../../src/modules/users/dtos/user.dto';
 import { Utils } from '../../../utils/Utils';
 import { PolicyPermission } from './permission';
 

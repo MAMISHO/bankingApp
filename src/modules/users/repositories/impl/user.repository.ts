@@ -1,21 +1,29 @@
 import { inject, injectable } from 'tsyringe';
-import { IUser } from '../../models/user/user.model';
-import { IUserDAO } from '../../repository/user/user.dao';
-import { IUserRepository } from '../../repository/user/user.interface.repository';
+import { UserCriteriaDTO } from '../../dtos/user.dto';
+import { IUser } from '../../entities/user.interface';
+import { IUserDAO } from '../user-dao.interface';
+import { IUserRepository } from '../user-repository.interface';
 
 @injectable()
-export class UserServiceRepository implements IUserRepository {
+export class UserRepositoryImpl implements IUserRepository {
   constructor(@inject('IUserDAO') private userDAO: IUserDAO) {}
+
+  async findAll(filter: UserCriteriaDTO): Promise<IUser[]> {
+    return this.userDAO.getByCriteria(filter);
+  }
 
   async get(id: number): Promise<IUser> {
     return this.userDAO.get(id);
   }
+
   getByUUID(uuid: string): Promise<IUser> {
     return this.userDAO.getByUUID(uuid);
   }
-  add(user: IUser): Promise<void> {
-    throw new Error('Method not implemented.');
+
+  async add(user: IUser): Promise<IUser> {
+    return this.userDAO.save(user);
   }
+
   update(User: IUser): Promise<void> {
     throw new Error('Method not implemented.');
   }
