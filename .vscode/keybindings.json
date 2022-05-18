@@ -1,0 +1,49 @@
+// Place your key bindings in this file to override the defaultsauto[]
+[
+    {
+        "key": "alt+left",
+        "command": "-breadcrumbs.focusPrevious",
+        "when": "breadcrumbsActive && breadcrumbsVisible"
+    },
+    {
+        "key": "alt+left",
+        "command": "-cursorWordStartLeft",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "alt+left",
+        "command": "-gitlens.key.left",
+        "when": "gitlens:key:left"
+    },
+    {
+        "key": "alt+left",
+        "command": "workbench.action.navigateBack"
+    },
+    {
+        "key": "ctrl+-",
+        "command": "-workbench.action.navigateBack"
+    },
+    {
+        "key": "alt+right",
+        "command": "-breadcrumbs.focusNext",
+        "when": "breadcrumbsActive && breadcrumbsVisible"
+    },
+    {
+        "key": "alt+right",
+        "command": "-cursorWordEndRight",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "alt+right",
+        "command": "-gitlens.key.right",
+        "when": "gitlens:key:right"
+    },
+    {
+        "key": "alt+right",
+        "command": "workbench.action.navigateForward"
+    },
+    {
+        "key": "ctrl+shift+-",
+        "command": "-workbench.action.navigateForward"
+    }
+]
