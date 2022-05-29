@@ -6,6 +6,7 @@ export interface IUserRepositoryService {
    * @param userId
    */
   findOne(userId: number): Promise<UserDTO>;
+  findOnebyUsername(username: string): Promise<UserDTO>;
   /**
    * Búsqueda por UUID sin relaciones
    * @param uuid

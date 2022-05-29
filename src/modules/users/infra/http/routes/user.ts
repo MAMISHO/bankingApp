@@ -1,5 +1,5 @@
 import express from 'express';
-import { CustomAuth } from '../../../../../../policies/auth';
+import { CustomAuth } from '../../../../../shared/policies/auth';
 import { UserController } from '../controllers/userController';
 
 const router = express.Router();

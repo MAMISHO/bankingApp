@@ -3,11 +3,12 @@ import express from 'express';
 import session from 'express-session';
 import mongoose from 'mongoose';
 import 'reflect-metadata';
+import { authRouter } from './modules/auth/infra/http/routes/auth';
+import { importRouter } from './modules/catalog/infra/http/routes/import';
 import { IUser } from './modules/users/entities/user.interface';
 import { userRouter } from './modules/users/infra/http/routes/user';
-import { authRouter } from './routes/auth';
 import { graphqlRouter } from './routes/graphql';
-import { importRouter } from './routes/import';
+// import * as d from './modules/auth/entities/session';
 
 declare module 'express-session' {
   interface SessionData {

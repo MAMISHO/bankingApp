@@ -7,7 +7,7 @@
  */
 declare const sails: any;
 import { UserDTO } from '../../../src/modules/users/dtos/user.dto';
-import { Utils } from '../../../utils/Utils';
+import { Utils } from '../../../src/shared/utils/Utils';
 import { PolicyPermission } from './permission';
 
 export const GraphAuth = {

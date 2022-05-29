@@ -8,6 +8,21 @@ import { IUserRepositoryService } from '../user-repository-service.interface';
 export class UserRepositoryServiceImpl implements IUserRepositoryService {
   constructor(@inject('IUserRepository') private userRepository: IUserRepository) {}
 
+  public async findOnebyUsername(username: string): Promise<UserDTO> {
+    const filter: UserCriteriaDTO = { username };
+    const result = await this.findAll(filter);
+
+    if (result.length > 1) {
+      throw new Error('username should be  unique');
+    }
+
+    if (result.length === 1) {
+      return Promise.resolve(result.pop() as UserDTO);
+    }
+
+    return Promise.reject();
+  }
+
   public async findOne(userId: number): Promise<UserDTO> {
     let userDTO: UserDTO;
     const user: IUser = await this.userRepository.get(userId);

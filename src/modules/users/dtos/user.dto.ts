@@ -31,6 +31,36 @@ export class UserDTO {
   }
 }
 
+export class BasicUserDTO {
+  public uuid: string;
+  public username: string;
+  public name: string;
+  public lastname: string;
+  public email: string;
+  public role: UserRoleType;
+
+  constructor(props: UserDTO) {
+    this.uuid = props.uuid;
+    this.username = props.username;
+    this.name = props.name;
+    this.lastname = props.lastname;
+    this.email = props.email;
+    this.role = props.role;
+  }
+
+  public isAdmin(): boolean {
+    return this.role === UserRoleType.ADMIN;
+  }
+
+  public fullName(): string {
+    return `${this.name} ${this.lastname}`;
+  }
+
+  public toJSON(): Object {
+    return { ...this };
+  }
+}
+
 export interface UserRequestDTO {
   id?: number;
   uuid?: string;

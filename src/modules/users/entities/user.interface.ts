@@ -6,11 +6,6 @@
 
 import { UserRoleType } from './user.enum';
 
-/*export enum UserRoleType {
-  ADMIN = 'ADMIN',
-  USER = 'USER',
-}*/
-
 export interface IUser {
   uuid?: string;
   username: string;

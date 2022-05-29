@@ -1,4 +1,4 @@
-import { Utils } from '../../../../../../utils/Utils';
+import { Utils } from '../../../../../shared/utils/Utils';
 import { UserCriteriaDTO } from '../../../dtos/user.dto';
 import { IUser } from '../../../entities/user.interface';
 import { IUserDAO } from '../../../repositories/user-dao.interface';
