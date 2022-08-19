@@ -2,9 +2,10 @@
   "name": "banking-app",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
     "build": "babel src -d lib",
+    "build:webpack": "webpack --mode production --config webpack.config.js",
     "runDev": "ts-node-dev src/index.ts",
     "start": "npm run build && npm run runDev"
   },
@@ -12,16 +13,25 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.18.10",
+    "@babel/plugin-transform-runtime": "^7.18.10",
+    "@babel/plugin-transform-typescript": "^7.18.12",
+    "@babel/preset-env": "^7.18.10",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.7",
     "@types/express-session": "^1.17.4",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/mongoose": "^5.7.36",
     "@types/multer": "^1.4.7",
+    "@types/node": "^18.7.6",
     "babel-cli": "^6.26.0",
+    "babel-loader": "^8.2.5",
     "babel-plugin-transform-typescript-metadata": "^0.3.2",
+    "ts-loader": "^9.3.1",
     "ts-node-dev": "^1.0.0-pre.57",
-    "typescript": "^4.2.4"
+    "typescript": "^4.7.4",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
   },
   "dependencies": {
     "@graphql-tools/stitch": "^8.6.9",

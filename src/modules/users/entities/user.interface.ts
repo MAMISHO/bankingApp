@@ -10,10 +10,10 @@ export interface IUser {
   uuid?: string;
   username: string;
   name: string;
-  lastname: string;
+  lastName: string;
   email: string;
   password: string;
-  passwordConfirm: string;
+  passwordConfirm?: string;
   resetPasswordToken: string;
   role: UserRoleType;
   status: boolean;

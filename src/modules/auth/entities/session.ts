@@ -1,7 +1,7 @@
-import { IUser } from '../../users/entities/user.interface';
+import { BasicUserDTO } from '../../users/dtos/user.dto';
 
 declare module 'express-session' {
   interface SessionData {
-    user: IUser;
+    user: BasicUserDTO;
   }
 }

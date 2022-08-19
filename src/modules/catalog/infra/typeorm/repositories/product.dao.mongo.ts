@@ -32,7 +32,7 @@ export class ProductMongoDAO implements IProductDAO {
     // return Product.save(product);
     const product = ProductEntity.build(newProduct);
     await product.save();
-    const iuser: IProduct = product.toJSON();
+    const iuser: IProduct = product.toJSON() as IProduct;
     return Promise.resolve(iuser);
     // return iuser;
   }
