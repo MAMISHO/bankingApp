@@ -8,3 +8,10 @@ export class SpecialtyDTO {
     Object.assign(this, props);
   }
 }
+export interface SpecialtyCriteriaDTO {
+  id?: number;
+  uuid?: string;
+  code?: string;
+  name?: string;
+  status?: boolean;
+}

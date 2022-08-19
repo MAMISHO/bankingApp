@@ -1,20 +1,38 @@
 import { json } from 'body-parser';
+import cors from 'cors';
 import express from 'express';
 import session from 'express-session';
 import mongoose from 'mongoose';
 import 'reflect-metadata';
 import { authRouter } from './modules/auth/infra/http/routes/auth';
 import { importRouter } from './modules/catalog/infra/http/routes/import';
-import { IUser } from './modules/users/entities/user.interface';
+import { BasicUserDTO } from './modules/users/dtos/user.dto';
 import { userRouter } from './modules/users/infra/http/routes/user';
 import { graphqlRouter } from './routes/graphql';
 // import * as d from './modules/auth/entities/session';
 
 declare module 'express-session' {
   interface SessionData {
-    user: IUser;
+    user: BasicUserDTO;
   }
 }
+
+const allowedOrigins = 'http://localhost:5000';
+
+const options: cors.CorsOptions = {
+  // origin: allowedOrigins,
+  origin: function (origin, callback) {
+    // allow requests with no origin
+    // (like mobile apps or curl requests)
+    // if (!origin) return callback(null, true);
+    if (!origin || allowedOrigins.indexOf(origin) === -1) {
+      var msg = 'The CORS policy for this site does not ' + 'allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  optionsSuccessStatus: 200,
+};
 
 // Configuramos el contenedor de servicios para
 /*container.register('IUserDAO', {
@@ -23,6 +41,9 @@ declare module 'express-session' {
 const userMongoDAO = container.resolve(UserMongoDAO);*/
 
 const app = express();
+
+// app.use(cors(options));
+
 app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 } }));
 app.use(json());
 // app.use(todoRouter);

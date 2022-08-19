@@ -18,7 +18,7 @@ export class AuthServiceImpl implements IAuthService {
     if (!user) {
       throw new Error('Bad credentials');
     }
-    if (Utils.verifyPassword(password, user.password)) {
+    if (!Utils.verifyPassword(password, user.password)) {
       throw new Error('Bad credentials');
     }
     // Metemos el usuario en sesión

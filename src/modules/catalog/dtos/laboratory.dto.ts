@@ -9,3 +9,12 @@ export class LaboratoryDTO {
     Object.assign(this, props);
   }
 }
+
+export interface LaboratoryCriteriaDTO {
+  id?: number;
+  uuid?: string;
+  code?: string;
+  name?: string;
+  license?: string;
+  status?: boolean;
+}

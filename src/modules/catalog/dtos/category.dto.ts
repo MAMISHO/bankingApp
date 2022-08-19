@@ -9,3 +9,11 @@ export class CategoryDTO {
     Object.assign(this, props);
   }
 }
+
+export interface CategoryCriteriaDTO {
+  id?: number;
+  uuid?: string;
+  code?: string;
+  name?: string;
+  status?: boolean;
+}
