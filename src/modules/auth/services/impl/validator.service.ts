@@ -1,7 +1,9 @@
 import { Request } from 'express';
+// import { injectable } from 'tsyringe';
 import * as StringUtils from 'underscore.string';
 import { IValidatorService } from '../validator-service.interface';
 
+// @injectable()
 export class ValidatorServiceImpl implements IValidatorService {
   public validateLoginRequest(req: Request): void {
     const { username, password } = req.body;

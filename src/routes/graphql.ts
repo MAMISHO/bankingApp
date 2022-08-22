@@ -27,6 +27,7 @@ query {
 router.use(
   '/graphql',
   // CustomAuth,
+  // @ts-ignore
   graphqlHTTP((req, res) => ({
     schema: SchemaWithPermissions,
     context: { req },

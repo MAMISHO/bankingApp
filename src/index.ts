@@ -1,10 +1,9 @@
-import { json } from 'body-parser';
-import cors from 'cors';
-import express from 'express';
+import express, { RequestHandler } from 'express';
 import session from 'express-session';
 import mongoose from 'mongoose';
 import 'reflect-metadata';
-import { authRouter } from './modules/auth/infra/http/routes/auth';
+import { CustomCorsConfig } from './config/cors.conf';
+import { authRouter } from './modules/auth/infra/http/routes/auth.router';
 import { importRouter } from './modules/catalog/infra/http/routes/import';
 import { BasicUserDTO } from './modules/users/dtos/user.dto';
 import { userRouter } from './modules/users/infra/http/routes/user';
@@ -16,8 +15,7 @@ declare module 'express-session' {
     user: BasicUserDTO;
   }
 }
-
-const allowedOrigins = 'http://localhost:5000';
+/* const allowedOrigins = 'http://localhost:3000';
 
 const options: cors.CorsOptions = {
   // origin: allowedOrigins,
@@ -34,6 +32,7 @@ const options: cors.CorsOptions = {
   optionsSuccessStatus: 200,
 };
 
+*/
 // Configuramos el contenedor de servicios para
 /*container.register('IUserDAO', {
   useClass: UserMongoDAO,
@@ -42,10 +41,10 @@ const userMongoDAO = container.resolve(UserMongoDAO);*/
 
 const app = express();
 
-// app.use(cors(options));
+app.use(CustomCorsConfig);
 
 app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 } }));
-app.use(json());
+app.use(express.json() as RequestHandler);
 // app.use(todoRouter);
 app.use(userRouter);
 app.use(authRouter);

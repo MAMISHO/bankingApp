@@ -12,6 +12,7 @@ export class AuthServiceImpl implements IAuthService {
   constructor(@inject('IValidatorService') private validatorService: IValidatorService) {}
 
   public async login(request: Request): Promise<LoginResponseDTO> {
+    console.log(request);
     this.validatorService.validateLoginRequest(request);
     const { username, password } = request.body;
     const user = await UserRepositoryService.findOnebyUsername(username);

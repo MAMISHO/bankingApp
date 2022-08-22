@@ -3,16 +3,6 @@ import { Request, Response } from 'express';
 import { AuthService } from '../../../../../loader';
 import { LoginResponseDTO } from '../../../dtos/auth.dto';
 
-// container.register('IUserDAO', {
-//   useClass: UserMongoDAO,
-// });
-
-/*container.register('IUserRepository', {
-  useClass: UserServiceRepository,
-});
-*/
-// const userRepositoryService = container.resolve(UserServiceRepository);
-
 const Controller = {
   signup: async (req: Request, res: Response) => {},
   login: async (req: Request, res: Response) => {

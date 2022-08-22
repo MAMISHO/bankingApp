@@ -22,4 +22,5 @@ export interface IProduct {
   pao?: String;
   foodIntolerance?: String;
   tags?: string;
+  status?: Boolean;
 }

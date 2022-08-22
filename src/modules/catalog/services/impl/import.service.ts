@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import { inject, injectable } from 'tsyringe';
 import { ProductFileDTO } from '../../dtos/product.dto';
 import { IProduct } from '../../entities/product.interface';
+import { ProductFileMapper } from '../../mappers/product-file.mapper';
 import { ICategoryRepository } from '../../repositories/category-repository.interface';
 import { ILaboratoryRepository } from '../../repositories/laboratory-repository.interface';
 import { IProductRepository } from '../../repositories/product-repository.interface';
@@ -18,7 +19,8 @@ export class ImportServiceImpl implements IImportService {
   constructor(
     @inject('ILaboratoryRepository') private laboratoryRepository: ILaboratoryRepository,
     @inject('ICategoryRepository') private categoryRepository: ICategoryRepository,
-    @inject('IProductRepository') private productRepository: IProductRepository
+    @inject('IProductRepository') private productRepository: IProductRepository,
+    private productFileMapper: ProductFileMapper
   ) {}
 
   public async importProducts(file: Express.Multer.File): Promise<boolean | undefined> {
@@ -94,7 +96,7 @@ export class ImportServiceImpl implements IImportService {
       */
       const laboratoy = laboratories.find((l) => l.code === p.laboratory);
       const category = categories.find((c) => c.code === p.category);
-      const product: IProduct = p as IProduct;
+      const product: IProduct = this.productFileMapper.toEntity(p);
       product.category = category;
       product.laboratory = laboratoy;
       product.specialties = [];
