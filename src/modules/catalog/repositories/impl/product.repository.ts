@@ -1,4 +1,5 @@
 import { inject, injectable } from 'tsyringe';
+import { ProductCriteriaDTO } from '../../dtos/product.dto';
 import { IProduct } from '../../entities/product.interface';
 import { IProductDAO } from '../product-dao.interface';
 import { IProductRepository } from '../product-repository.interface';
@@ -6,6 +7,9 @@ import { IProductRepository } from '../product-repository.interface';
 @injectable()
 export class ProductRepositoryImpl implements IProductRepository {
   constructor(@inject('IProductDAO') private productDAO: IProductDAO) {}
+  findAll(filter: ProductCriteriaDTO): Promise<IProduct[]> {
+    return this.productDAO.getByCriteria(filter);
+  }
   get(id: number): Promise<IProduct> {
     // throw new Error('Method not implemented.');
     return this.productDAO.get(id);

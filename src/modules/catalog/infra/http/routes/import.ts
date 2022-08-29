@@ -8,7 +8,7 @@ import { ImportController } from '../controllers/importController';
 const router = express.Router();
 const upload = multer({ dest: os.tmpdir() });
 
-router.post('/api/import/products', CustomAuthRoleAdmin, upload.single('file'), ImportController.importProducts);
+router.post('/api/import/products', CustomAuthRoleAdmin, upload.single('fileInput'), ImportController.importProducts);
 router.post('/api/import/categories', CustomAuthRoleAdmin, ImportController.importCategories);
 
 export { router as importRouter };

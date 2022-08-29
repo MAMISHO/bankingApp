@@ -68,4 +68,7 @@ const ProductSchema = new mongoose.Schema({
   },
 });
 
+// https://stackoverflow.com/questions/28775051/best-way-to-perform-a-full-text-search-in-mongodb-and-mongoose
+ProductSchema.index({ denomination: 'text' });
+
 export { ProductSchema };

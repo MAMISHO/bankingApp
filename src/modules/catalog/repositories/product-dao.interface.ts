@@ -1,6 +1,8 @@
+import { ProductCriteriaDTO } from '../dtos/product.dto';
 import { IProduct } from '../entities/product.interface';
 
 export interface IProductDAO {
+  getByCriteria(criteria: ProductCriteriaDTO): Promise<IProduct[]>;
   get(id: number): Promise<IProduct>;
   getAll(): Promise<IProduct[]>;
   getByUUID(uuid: string): Promise<IProduct>;

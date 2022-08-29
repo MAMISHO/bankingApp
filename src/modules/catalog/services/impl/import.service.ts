@@ -3,12 +3,11 @@ import * as fs from 'fs';
 import { inject, injectable } from 'tsyringe';
 import { ProductFileDTO } from '../../dtos/product.dto';
 import { IProduct } from '../../entities/product.interface';
-import { ProductFileMapper } from '../../mappers/product-file.mapper';
+import { ProductFileMapperService } from '../../mappers/product-file-mapper-service.interface';
 import { ICategoryRepository } from '../../repositories/category-repository.interface';
 import { ILaboratoryRepository } from '../../repositories/laboratory-repository.interface';
 import { IProductRepository } from '../../repositories/product-repository.interface';
 import { IImportService } from '../import-service.interface';
-
 /**
  * ref: https://stackoverflow.com/questions/58431076/how-to-use-async-await-with-fs-createreadstream-in-node-js
  * 
@@ -20,7 +19,7 @@ export class ImportServiceImpl implements IImportService {
     @inject('ILaboratoryRepository') private laboratoryRepository: ILaboratoryRepository,
     @inject('ICategoryRepository') private categoryRepository: ICategoryRepository,
     @inject('IProductRepository') private productRepository: IProductRepository,
-    private productFileMapper: ProductFileMapper
+    @inject('ProductFileMapperService') private productFileMapperService: ProductFileMapperService
   ) {}
 
   public async importProducts(file: Express.Multer.File): Promise<boolean | undefined> {
@@ -96,7 +95,7 @@ export class ImportServiceImpl implements IImportService {
       */
       const laboratoy = laboratories.find((l) => l.code === p.laboratory);
       const category = categories.find((c) => c.code === p.category);
-      const product: IProduct = this.productFileMapper.toEntity(p);
+      const product: IProduct = this.productFileMapperService.toEntity(p);
       product.category = category;
       product.laboratory = laboratoy;
       product.specialties = [];

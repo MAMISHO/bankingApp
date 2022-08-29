@@ -1,11 +1,15 @@
-import { ICategory } from '../entities/category.interface';
+import { AutoMap } from '@automapper/classes';
+import { ILaboratory } from '../entities/laboratory.interface';
 
 export class LaboratoryDTO {
+  @AutoMap()
   public code: number;
+  @AutoMap()
   public name: string;
+  @AutoMap()
   public license: string;
 
-  constructor(props: ICategory) {
+  constructor(props: ILaboratory) {
     Object.assign(this, props);
   }
 }

@@ -1,3 +1,5 @@
+import { Utils } from '../../../../../shared/utils/Utils';
+import { ProductCriteriaDTO } from '../../../dtos/product.dto';
 import { IProduct } from '../../../entities/product.interface';
 import { IProductDAO } from '../../../repositories/product-dao.interface';
 import { ProductEntity } from '../entities/product/product.entity';
@@ -5,6 +7,46 @@ import { ProductEntity } from '../entities/product/product.entity';
 // @injectable()
 // @scoped(Lifecycle.ResolutionScoped)
 export class ProductMongoDAO implements IProductDAO {
+  public async getByCriteria(criteria: ProductCriteriaDTO): Promise<IProduct[]> {
+    if (!criteria) {
+      Promise.reject(new Error('Criteria filter is required'));
+    }
+    if (!Utils.checkValidValue(criteria)) {
+      Promise.reject(new Error('Criteria filter properties are required'));
+    }
+    const filter: any = {};
+
+    if (Utils.hasValidValue(criteria.id)) {
+      filter.id = criteria.id;
+    }
+    if (Utils.hasValidValue(criteria.status)) {
+      filter.status = criteria.status;
+    }
+    if (Utils.hasValidValue(criteria.code)) {
+      filter.code = criteria.code;
+    }
+
+    if (Utils.hasValidValue(criteria.nationalCode)) {
+      filter.nationalCode = criteria.nationalCode;
+    }
+
+    if (Utils.hasValidValue(criteria.denomination)) {
+      filter.denomination = criteria.denomination;
+    }
+
+    if (Utils.hasValidValue(criteria.uuid)) {
+      filter.uuid = criteria.uuid;
+    }
+
+    let products: IProduct[];
+    if (filter.denomination && filter.denomination.length > 0) {
+      products = await ProductEntity.find({ $text: { $search: filter.denomination } }).lean();
+    } else {
+      products = await ProductEntity.find(filter).lean();
+    }
+    return products;
+  }
+
   public async get(id: number): Promise<IProduct> {
     const product: IProduct | null = await ProductEntity.findOne({ id: id }).lean();
     if (product) {

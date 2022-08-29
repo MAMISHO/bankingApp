@@ -8,6 +8,7 @@ export const UserQueries = {
   getUser: {
     type: UserType,
     name: 'user',
+    description: 'Esquema Usuarios, TODO: añadir doc',
     args: {
       id: { type: GraphQLInt },
       uuid: { type: GraphQLString },
@@ -55,5 +56,7 @@ export const UserSchema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'UserQueries',
     fields: UserQueries,
+    description: 'Esquema que representa a los usuarios',
   }),
+  description: 'comentario',
 });

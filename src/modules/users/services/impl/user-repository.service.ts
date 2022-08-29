@@ -23,7 +23,7 @@ export class UserRepositoryServiceImpl implements IUserRepositoryService {
     }
 
     if (result.length === 1) {
-      return Promise.resolve(result.pop());
+      return Promise.resolve(result.pop()!);
     }
 
     return Promise.reject();

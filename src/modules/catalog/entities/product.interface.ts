@@ -5,7 +5,7 @@ import { Class } from './product.enum';
 export interface IProduct {
   code?: String;
   nationalCode?: String;
-  specialties?: [];
+  specialties?: String[];
   category?: ICategory;
   denomination?: String;
   presentation?: String;
@@ -21,6 +21,6 @@ export interface IProduct {
   cautionsWarnings?: String;
   pao?: String;
   foodIntolerance?: String;
-  tags?: string;
+  tags?: String[];
   status?: Boolean;
 }

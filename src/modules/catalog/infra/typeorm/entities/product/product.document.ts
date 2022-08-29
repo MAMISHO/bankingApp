@@ -6,7 +6,7 @@ import { Class } from '../../../../entities/product.enum';
 export interface ProductDoc extends mongoose.Document {
   code?: String; // código de la industria
   nationalCode?: String;
-  specialties?: [];
+  specialties?: String[];
   category?: ICategory;
   denomination?: String;
   presentation?: String;
@@ -22,5 +22,5 @@ export interface ProductDoc extends mongoose.Document {
   cautionsWarnings?: String;
   pao?: String;
   foodIntolerance?: String;
-  tags?: string;
+  tags?: String[];
 }
