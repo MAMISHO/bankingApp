@@ -1,0 +1,27 @@
+db.getCollection('Category').insertMany([
+{
+    "_id" : ObjectId("627d1013f1b455ee49bc6461"),
+    "code" : 1.0,
+    "name" : "Normon",
+    "license" : "0336"
+},
+{
+    "_id" : ObjectId("627d1013f1b455ee49bc6462"),
+    "code" : 2.0,
+    "name" : "pfizer",
+    "license" : "0370"
+},
+{
+    "_id" : ObjectId("627d1013f1b455ee49bc6463"),
+    "code" : 3.0,
+    "name" : "Jhonson",
+    "license" : "0380"
+},
+{
+    "_id" : ObjectId("627d1013f1b455ee49bc6464"),
+    "code" : 4.0,
+    "name" : "CIMA",
+    "license" : "0390"
+}
+    ]
+    )
