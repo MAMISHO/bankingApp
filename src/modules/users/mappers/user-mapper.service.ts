@@ -19,6 +19,7 @@ export class UserMapperService implements EntityMapper<IUser, UserDTO> {
     createUserMetadata();
     this.mapper = createMapper({ strategyInitializer: pojos() });
     createMap<IUser, UserDTO>(this.mapper, 'IUser', 'UserDTO');
+    createMap<UserDTO, IUser>(this.mapper, 'UserDTO', 'IUser');
   }
 
   public toDTO(entity: IUser): UserDTO {

@@ -1,0 +1,41 @@
+db.getCollection('categories').insertMany([{
+        "code": 1,
+        "name": "Cosmeticos",
+        "description": "Cosméticos y productos de higiene personal"
+    },
+    {
+        "code": 2,
+        "name": "Alimentación",
+        "description": "Alimentación"
+    },
+    {
+        "code": 3,
+        "name": "Productos sanitarios",
+        "description": "Productos sanitarios"
+    },
+    {
+        "code": 4,
+        "name": "Productos sanitarios in-vitro",
+        "description": "Productos sanitarios in-vitro"
+    },
+    {
+        "code": 5,
+        "name": "Puericultura",
+        "description": "Cuidadno infantil"
+    },
+    {
+        "code": 6,
+        "name": "Biocidas",
+        "description": "Biocidas"
+    },
+    {
+        "code": 7,
+        "name": "Otros",
+        "description": "Otros Productos"
+    },
+    {
+        "code": 8,
+        "name": "Medicamentos",
+        "description": "Medicamentos"
+    }
+])
