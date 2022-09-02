@@ -11,4 +11,4 @@ const upload = multer({ dest: os.tmpdir() });
 router.post('/api/import/products', CustomAuthRoleAdmin, upload.single('fileInput'), ImportController.importProducts);
 router.post('/api/import/categories', CustomAuthRoleAdmin, ImportController.importCategories);
 
-export { router as importRouter };
+export { router as ImportRouter };

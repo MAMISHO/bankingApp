@@ -1,12 +1,12 @@
 import * as csv from 'fast-csv';
 import * as fs from 'fs';
 import { inject, injectable } from 'tsyringe';
-import { ProductFileDTO } from '../../dtos/product.dto';
-import { IProduct } from '../../entities/product.interface';
-import { ProductFileMapperService } from '../../mappers/product-file-mapper-service.interface';
-import { ICategoryRepository } from '../../repositories/category-repository.interface';
-import { ILaboratoryRepository } from '../../repositories/laboratory-repository.interface';
-import { IProductRepository } from '../../repositories/product-repository.interface';
+import { ProductFileDTO } from '../../../catalog/dtos/product.dto';
+import { IProduct } from '../../../catalog/entities/product.interface';
+import { ProductFileMapperService } from '../../../catalog/mappers/product-file-mapper-service.interface';
+import { ICategoryRepository } from '../../../catalog/repositories/category-repository.interface';
+import { ILaboratoryRepository } from '../../../catalog/repositories/laboratory-repository.interface';
+import { IProductRepository } from '../../../catalog/repositories/product-repository.interface';
 import { IImportService } from '../import-service.interface';
 /**
  * ref: https://stackoverflow.com/questions/58431076/how-to-use-async-await-with-fs-createreadstream-in-node-js
@@ -33,18 +33,16 @@ export class ImportServiceImpl implements IImportService {
         headers: true,
         delimiter: ';',
       };
-      const transform = csv
-        .format<ProductFileDTO, ProductFileDTO>(parseOptions)
-        .transform((row: ProductFileDTO, next: any) => {
-          // console.log(row);
-          row.laboratory = row.laboratory ? +row.laboratory : row.category;
-          row.category = row.category ? +row.category : row.category;
-          const steril: any = row.steril;
-          row.steril = steril && typeof steril === 'string' && steril.toLowerCase() === 'sí' ? true : false;
-          products.push(row);
-          rowsCount++;
-          next();
-        });
+      const transform = csv.format<ProductFileDTO, ProductFileDTO>(parseOptions).transform((row: ProductFileDTO, next: any) => {
+        // console.log(row);
+        row.laboratory = row.laboratory ? +row.laboratory : row.category;
+        row.category = row.category ? +row.category : row.category;
+        const steril: any = row.steril;
+        row.steril = steril && typeof steril === 'string' && steril.toLowerCase() === 'sí' ? true : false;
+        products.push(row);
+        rowsCount++;
+        next();
+      });
       const parse = csv.parse(parseOptions);
 
       try {
