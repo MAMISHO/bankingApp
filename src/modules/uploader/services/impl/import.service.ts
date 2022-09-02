@@ -7,7 +7,10 @@ import { ProductFileMapperService } from '../../../catalog/mappers/product-file-
 import { ICategoryRepository } from '../../../catalog/repositories/category-repository.interface';
 import { ILaboratoryRepository } from '../../../catalog/repositories/laboratory-repository.interface';
 import { IProductRepository } from '../../../catalog/repositories/product-repository.interface';
+import { LoadProcessRequestDTO } from '../../dtos/load-process-request.dto';
+import { LoadProcessDTO } from '../../dtos/load-process.dto';
 import { IImportService } from '../import-service.interface';
+import { ILoadProcessRepositoryService } from '../load-process-repository-service.interface';
 /**
  * ref: https://stackoverflow.com/questions/58431076/how-to-use-async-await-with-fs-createreadstream-in-node-js
  * 
@@ -19,12 +22,15 @@ export class ImportServiceImpl implements IImportService {
     @inject('ILaboratoryRepository') private laboratoryRepository: ILaboratoryRepository,
     @inject('ICategoryRepository') private categoryRepository: ICategoryRepository,
     @inject('IProductRepository') private productRepository: IProductRepository,
-    @inject('ProductFileMapperService') private productFileMapperService: ProductFileMapperService
+    @inject('ProductFileMapperService') private productFileMapperService: ProductFileMapperService,
+    @inject('ILoadProcessRepositoryService') private loadProcessRepositoryService: ILoadProcessRepositoryService
   ) {}
 
-  public async importProducts(file: Express.Multer.File): Promise<boolean | undefined> {
+  public async importProducts(loadRequest: LoadProcessRequestDTO): Promise<LoadProcessDTO> {
     const products = new Array<ProductFileDTO>();
-    if (file) {
+    const loadProcessDto = await this.registerNewLoadProcess(loadRequest);
+
+    if (loadRequest.file) {
       // const data = fs.readFileSync(file.path);
       let rowsCount = 0;
       const parseOptions = {
@@ -47,27 +53,28 @@ export class ImportServiceImpl implements IImportService {
 
       try {
         await fs
-          .createReadStream(file.path)
+          .createReadStream(loadRequest.file.path)
           .pipe(parse)
           .pipe(transform)
           .on('error', (error) => {
             console.error(error);
             // return res.status(400).json({ success: false, message: 'An error occurred' });
-            return Promise.reject(false);
+            return Promise.reject(loadProcessDto);
           })
           .on('data', (data) => console.log('data'))
           .on('end', async () => {
-            fs.unlinkSync(file.path);
+            fs.unlinkSync(loadRequest.file.path);
             await this.sendProductcsToRepository(products);
             console.log('end');
-            return Promise.resolve(true);
+            return Promise.resolve(loadProcessDto);
           });
-        return Promise.resolve(true);
+        return Promise.resolve(loadProcessDto);
       } catch (err) {
         console.error(err);
+        return Promise.resolve(loadProcessDto);
       }
     } else {
-      return Promise.reject(false);
+      return Promise.reject(loadProcessDto);
     }
   }
 
@@ -101,5 +108,14 @@ export class ImportServiceImpl implements IImportService {
       await this.productRepository.add(product);
     }
     return Promise.resolve(products);
+  }
+
+  private registerNewLoadProcess(loadRequest: LoadProcessRequestDTO): Promise<LoadProcessDTO> {
+    const newProcessDTO = new LoadProcessDTO();
+    newProcessDTO.fileName = loadRequest.fileName;
+    newProcessDTO.userName = 'admin';
+
+    const processDTO = this.loadProcessRepositoryService.save(newProcessDTO);
+    return processDTO;
   }
 }

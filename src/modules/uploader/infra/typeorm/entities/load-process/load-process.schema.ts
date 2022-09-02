@@ -27,7 +27,7 @@ const LoadProcessSchema = new mongoose.Schema(
     },
     status: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     progress: {
       type: Number,

@@ -59,6 +59,6 @@ export class LoadProcessRepositoryServiceImpl implements ILoadProcessRepositoryS
   }
 
   save(processDTO: LoadProcessDTO): Promise<LoadProcessDTO> {
-    throw new Error('Method not implemented.');
+    return this.loadProcessRepository.add(processDTO);
   }
 }
