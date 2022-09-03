@@ -4,7 +4,7 @@ import { LoadProcessRequestDTO } from '../../../dtos/load-process-request.dto';
 import { LoadProcessDTO } from '../../../dtos/load-process.dto';
 
 const Controller = {
-  importProducts: async (req: Request, res: Response) => {
+  importFromFile: async (req: Request, res: Response) => {
     const file = req.file;
     const impReq: LoadProcessRequestDTO = new LoadProcessRequestDTO(req.body);
     if (file && impReq && impReq.uploadType) {
@@ -31,8 +31,6 @@ const Controller = {
       return res.status(400).json({ success: false, message: 'An error occurred', data: null });
     }
   },
-
-  importCategories: async (req: Request, res: Response) => {},
 };
 
 export const ImportController = Controller;
