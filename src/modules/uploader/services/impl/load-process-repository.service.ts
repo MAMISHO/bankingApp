@@ -1,7 +1,10 @@
 import { inject, injectable } from 'tsyringe';
+import { LoadProcessItemDTO } from '../../dtos/load-process-item.dto';
 import { LoadProcessCriteriaDTO, LoadProcessDTO } from '../../dtos/load-process.dto';
 import { ILoadProcess } from '../../entities/load-process.interface';
+import { LoadProcessItemMapperService } from '../../mappers/load-process-item-mapper-service.interface';
 import { LoadProcessMapperService } from '../../mappers/load-process-mapper-service.interface';
+import { ILoadProcessItemRepository } from '../../repositories/load-process-item-repository.interface';
 import { ILoadProcessRepository } from '../../repositories/load-process-repository.interface';
 import { ILoadProcessRepositoryService } from '../load-process-repository-service.interface';
 
@@ -10,7 +13,9 @@ export class LoadProcessRepositoryServiceImpl implements ILoadProcessRepositoryS
   constructor(
     // @inject('ILaboRepository') private laboratoryRepository: ILaboratoryRepository,
     @inject('ILoadProcessRepository') private loadProcessRepository: ILoadProcessRepository,
-    @inject('LoadProcessMapperService') private loadProcessMapperService: LoadProcessMapperService
+    @inject('LoadProcessMapperService') private loadProcessMapperService: LoadProcessMapperService,
+    @inject('ILoadProcessItemRepository') private loadProcessItemRepository: ILoadProcessItemRepository,
+    @inject('LoadProcessItemMapperService') private loadProcessItemMapperService: LoadProcessItemMapperService
   ) {}
   async findOne(processId: number): Promise<LoadProcessDTO> {
     const filter: LoadProcessCriteriaDTO = { id: processId };
@@ -59,6 +64,16 @@ export class LoadProcessRepositoryServiceImpl implements ILoadProcessRepositoryS
   }
 
   save(processDTO: LoadProcessDTO): Promise<LoadProcessDTO> {
-    return this.loadProcessRepository.add(processDTO);
+    const iProcessDTO = this.loadProcessMapperService.toEntity(processDTO);
+    return this.loadProcessRepository.add(iProcessDTO);
+  }
+
+  async saveItem(loadProcessItemDTO: LoadProcessItemDTO): Promise<LoadProcessItemDTO> {
+    const iProcessItem = this.loadProcessItemMapperService.toEntity(loadProcessItemDTO);
+    if (!iProcessItem._id && iProcessItem.uuidLoadProcess) {
+      const iProcess = await this.loadProcessRepository.getByUUID(iProcessItem.uuidLoadProcess);
+      iProcessItem.loadProcess = iProcess;
+    }
+    return this.loadProcessItemRepository.add(iProcessItem);
   }
 }

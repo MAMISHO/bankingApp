@@ -1,9 +1,9 @@
 import { ILoadProcess } from './load-process.interface';
 
 export interface ILoadProcessItem {
-  // id: String;
-  uuid: String;
-  uuidLoadProcess: String;
-  dataItem: String;
+  _id?: string;
+  uuid: string;
+  uuidLoadProcess: string;
+  dataItem: string;
   loadProcess: ILoadProcess;
 }

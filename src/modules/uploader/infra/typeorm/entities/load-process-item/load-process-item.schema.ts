@@ -3,10 +3,10 @@ import mongoose from 'mongoose';
 const LoadProcessItemSchema = new mongoose.Schema(
   {
     uuid: {
-      type: Number,
+      type: String,
       required: true,
       index: true,
-      unique: true,
+      // unique: true,
     },
     uuidLoadProcess: {
       type: String,
@@ -17,7 +17,7 @@ const LoadProcessItemSchema = new mongoose.Schema(
       required: true,
     },
     loadProcess: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: 'LoadProcess',
     },

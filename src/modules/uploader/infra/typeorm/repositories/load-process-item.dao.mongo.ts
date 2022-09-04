@@ -36,6 +36,8 @@ export class LoadProcessItemMongoDAO implements ILoadProcessItemDAO {
   }
 
   public async saveCollection(items: ILoadProcessItem[]): Promise<ILoadProcessItem[]> {
+    const processColle = LoadProcessItemEntity.build(items);
+    LoadProcessItemEntity.insertMany(processColle);
     for (let l of items) {
       l = await this.save(l); // Todo esperar a que se resuelvan todos
     }

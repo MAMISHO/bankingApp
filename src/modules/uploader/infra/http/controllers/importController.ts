@@ -27,9 +27,20 @@ const Controller = {
         console.error(err);
         return res.status(400).json({ success: false, message: 'An error occurred', data: null });
       }
-    } else {
+    }
+    return res.status(400).json({ success: false, message: 'An error occurred', data: null });
+  },
+
+  getProgressProcess: async (req: Request, res: Response) => {
+    const uuid = req.query.uuid as string;
+    if (!uuid) {
       return res.status(400).json({ success: false, message: 'An error occurred', data: null });
     }
+    const loadProcess: LoadProcessDTO = ImportService.getProgressProcess(uuid);
+    if (loadProcess && loadProcess) {
+      return res.status(200).json({ success: loadProcess.status, data: loadProcess });
+    }
+    return res.status(400).json({ success: false, message: 'An error occurred', data: null });
   },
 };
 

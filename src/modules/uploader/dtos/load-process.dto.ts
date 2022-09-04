@@ -5,21 +5,21 @@ import { LoadProcessItemDTO } from './load-process-item.dto';
 
 export class LoadProcessDTO {
   @AutoMap()
-  public uuid: String;
+  public uuid: string;
   @AutoMap()
   public startDateTime: Date;
   @AutoMap()
   public endDateTime: Date;
   @AutoMap()
-  public fileName: String;
+  public fileName: string;
   @AutoMap()
-  public mimeType: String;
+  public mimeType: string;
   @AutoMap()
-  public status: Boolean;
+  public status: boolean;
   @AutoMap()
-  public progress: Number;
+  public progress: number;
   @AutoMap()
-  public userName: String;
+  public userName: string;
   @AutoMap()
   public loadProcessType: LoadProcessType;
   @AutoMap()

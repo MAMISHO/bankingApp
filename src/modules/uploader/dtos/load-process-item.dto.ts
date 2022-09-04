@@ -4,16 +4,16 @@ import { LoadProcessDTO } from './load-process.dto';
 
 export class LoadProcessItemDTO {
   @AutoMap()
-  uuid: String;
+  uuid: string;
   @AutoMap()
-  uuidLoadProcess: String;
+  uuidLoadProcess: string;
   @AutoMap()
-  dataItem: String;
+  dataItem: string;
   @AutoMap()
   loadProcess: LoadProcessDTO;
 
-  constructor(props: ILoadProcessItem) {
-    Object.assign(this, props);
+  constructor(props?: ILoadProcessItem) {
+    // Object.assign(this, props);
   }
 }
 

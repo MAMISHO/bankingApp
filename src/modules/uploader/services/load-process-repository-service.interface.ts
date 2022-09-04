@@ -1,3 +1,4 @@
+import { LoadProcessItemDTO } from '../dtos/load-process-item.dto';
 import { LoadProcessCriteriaDTO, LoadProcessDTO } from '../dtos/load-process.dto';
 
 export interface ILoadProcessRepositoryService {
@@ -32,4 +33,6 @@ export interface ILoadProcessRepositoryService {
   findAllComplete(filter: LoadProcessCriteriaDTO): Promise<LoadProcessDTO[]>;
 
   save(loadProcessDTO: LoadProcessDTO): Promise<LoadProcessDTO>;
+
+  saveItem(loadProcessItemDTO: LoadProcessItemDTO): Promise<LoadProcessItemDTO>;
 }

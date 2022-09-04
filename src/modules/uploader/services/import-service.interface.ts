@@ -8,4 +8,5 @@ import { LoadProcessDTO } from '../dtos/load-process.dto';
  */
 export interface IImportService {
   importProducts(loadRequest: LoadProcessRequestDTO): Promise<LoadProcessDTO>;
+  getProgressProcess(uuidProcess: string): LoadProcessDTO;
 }

@@ -1,14 +1,13 @@
 import mongoose from 'mongoose';
 import { LoadProcessType } from '../../../../entities/load-process-type.enum';
-import { LoadProcessItemSchema } from '../load-process-item/load-process-item.schema';
 
 const LoadProcessSchema = new mongoose.Schema(
   {
     uuid: {
       type: String,
       required: true,
-      index: true,
-      unique: true,
+      // index: true,
+      // unique: true,
     },
     startDateTime: {
       type: Date,
@@ -40,9 +39,14 @@ const LoadProcessSchema = new mongoose.Schema(
     loadProcessType: {
       type: LoadProcessType,
     },
-    items: {
-      type: [LoadProcessItemSchema],
-    },
+    items: [
+      {
+        // type: [LoadProcessItemSchema], // embebido
+        // required: false,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'LoadProcessItem',
+      },
+    ],
   },
   { collection: 'load_process' }
 );

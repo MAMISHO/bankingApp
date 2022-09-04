@@ -4,4 +4,5 @@ import { LoadProcessItemDoc } from './load-process-item.document';
 
 export interface LoadProcessItemModel extends mongoose.Model<LoadProcessItemDoc> {
   build(attr: ILoadProcessItem): LoadProcessItemDoc;
+  build(attr: ILoadProcessItem[]): LoadProcessItemDoc[];
 }

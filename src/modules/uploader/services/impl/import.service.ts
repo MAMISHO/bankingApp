@@ -7,6 +7,7 @@ import { ProductFileMapperService } from '../../../catalog/mappers/product-file-
 import { ICategoryRepository } from '../../../catalog/repositories/category-repository.interface';
 import { ILaboratoryRepository } from '../../../catalog/repositories/laboratory-repository.interface';
 import { IProductRepository } from '../../../catalog/repositories/product-repository.interface';
+import { LoadProcessItemDTO } from '../../dtos/load-process-item.dto';
 import { LoadProcessRequestDTO } from '../../dtos/load-process-request.dto';
 import { LoadProcessDTO } from '../../dtos/load-process.dto';
 import { IImportService } from '../import-service.interface';
@@ -18,13 +19,16 @@ import { ILoadProcessRepositoryService } from '../load-process-repository-servic
  */
 @injectable()
 export class ImportServiceImpl implements IImportService {
+  private processList: LoadProcessDTO[];
   constructor(
     @inject('ILaboratoryRepository') private laboratoryRepository: ILaboratoryRepository,
     @inject('ICategoryRepository') private categoryRepository: ICategoryRepository,
     @inject('IProductRepository') private productRepository: IProductRepository,
     @inject('ProductFileMapperService') private productFileMapperService: ProductFileMapperService,
     @inject('ILoadProcessRepositoryService') private loadProcessRepositoryService: ILoadProcessRepositoryService
-  ) {}
+  ) {
+    this.processList = new Array<LoadProcessDTO>();
+  }
 
   public async importProducts(loadRequest: LoadProcessRequestDTO): Promise<LoadProcessDTO> {
     const products = new Array<ProductFileDTO>();
@@ -59,27 +63,45 @@ export class ImportServiceImpl implements IImportService {
           .on('error', (error) => {
             console.error(error);
             // return res.status(400).json({ success: false, message: 'An error occurred' });
+            loadProcessDto.status = false;
             return Promise.reject(loadProcessDto);
           })
           .on('data', (data) => console.log('data'))
           .on('end', async () => {
             fs.unlinkSync(loadRequest.file.path);
-            await this.sendProductcsToRepository(products);
+            // await this.sendProductcsToRepository(products);
+            this.sendProductcsToRepository(products, loadProcessDto);
             console.log('end');
             return Promise.resolve(loadProcessDto);
           });
+        loadProcessDto.status = false;
         return Promise.resolve(loadProcessDto);
       } catch (err) {
         console.error(err);
+        loadProcessDto.status = false;
         return Promise.resolve(loadProcessDto);
       }
     } else {
+      loadProcessDto.status = false;
       return Promise.reject(loadProcessDto);
     }
   }
 
-  private async sendProductcsToRepository(productsFile: ProductFileDTO[]): Promise<IProduct[]> {
+  public getProgressProcess(uuidProcess: string): LoadProcessDTO {
+    let processDto = new LoadProcessDTO();
+    processDto.status = false;
+    for (const lp of this.processList) {
+      if (lp.uuid === uuidProcess) {
+        processDto = lp;
+        break;
+      }
+    }
+    return processDto;
+  }
+
+  private async sendProductcsToRepository(productsFile: ProductFileDTO[], loadProcessDto: LoadProcessDTO): Promise<IProduct[]> {
     console.log('inicia la persistencia');
+    this.processList.push(loadProcessDto);
     // console.log(rowsCount);
     console.log(productsFile.length);
     const products: IProduct[] = new Array<IProduct>();
@@ -87,7 +109,18 @@ export class ImportServiceImpl implements IImportService {
     const laboratories = await this.laboratoryRepository.getAll();
     const categories = await this.categoryRepository.getAll();
 
+    // TEST
+    /*loadProcessDto.progress = 0;
+    for (let cont = 0; cont < 100; cont++) {
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+      console.log('World! =>  ' + cont);
+      loadProcessDto.progress++;
+    }
+    console.log('Persiste');
+    */
+    loadProcessDto.progress = 0;
     for (const p of productsFile) {
+      loadProcessDto.progress++;
       /*
       const laboratoy = laboratories.find((l) => {
         if (typeof p.laboratory === 'string') {
@@ -105,8 +138,14 @@ export class ImportServiceImpl implements IImportService {
       product.laboratory = laboratoy;
       product.specialties = [];
       console.log(product.code);
-      await this.productRepository.add(product);
+      const productSave = await this.productRepository.add(product);
+      const itemProcess = await this.registerNewLoadProcessItem(loadProcessDto, JSON.stringify(productSave));
+      if (!loadProcessDto.items) {
+        loadProcessDto.items = new Array<LoadProcessItemDTO>();
+      }
+      loadProcessDto.items.push(itemProcess);
     }
+    // this.loadProcessRepositoryService.save(loadProcessDto);
     return Promise.resolve(products);
   }
 
@@ -117,5 +156,15 @@ export class ImportServiceImpl implements IImportService {
 
     const processDTO = this.loadProcessRepositoryService.save(newProcessDTO);
     return processDTO;
+  }
+
+  private async registerNewLoadProcessItem(loadProcessDTO: LoadProcessDTO, dataItem: string): Promise<LoadProcessItemDTO> {
+    const newProcessItemDTO = new LoadProcessItemDTO();
+    newProcessItemDTO.dataItem = dataItem;
+    newProcessItemDTO.loadProcess = loadProcessDTO;
+    newProcessItemDTO.uuidLoadProcess = loadProcessDTO.uuid;
+
+    const processItemDTO = await this.loadProcessRepositoryService.saveItem(newProcessItemDTO);
+    return processItemDTO;
   }
 }

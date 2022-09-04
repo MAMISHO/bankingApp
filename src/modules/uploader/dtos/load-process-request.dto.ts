@@ -5,11 +5,11 @@ export class LoadProcessRequestDTO {
   @AutoMap()
   public file: Express.Multer.File;
   @AutoMap()
-  public fileName: String;
+  public fileName: string;
   @AutoMap()
   public uploadType: LoadProcessType;
 
-  constructor(req: { file: Express.Multer.File; fileName: String; uploadType: LoadProcessType }) {
+  constructor(req: { file: Express.Multer.File; fileName: string; uploadType: LoadProcessType }) {
     this.file = req.file;
     this.fileName = req.fileName;
     this.uploadType = req.uploadType;
